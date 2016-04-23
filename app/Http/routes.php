@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//API Routing
+Route::group(['prefix' => 'v1/'], function(){
+	Route::resource('events', 'EventsController');
+	
+});
+
