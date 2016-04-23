@@ -40,7 +40,7 @@ class EventsController extends Controller
 
         $rules = array(
             'user_id' => 'required',
-            'date' => 'required | date_format:Y-m-d ',
+            'date' => 'required | date_format:Y-m-d',
             'title' => 'required',
         );
         $validator = \Validator::make($request->all(), $rules);
