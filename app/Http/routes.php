@@ -15,9 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/hello', function () {
+    return "hello";
+});
+
 //API Routing
 Route::group(['prefix' => 'v1/'], function(){
 	Route::resource('events', 'EventsController');
-	
 });
+
+Route::group(['middleware' => 'web'], function(){
+	Route::auth();
+
+	Route::get('/home', 'HomeController@index');
+});
+
 
