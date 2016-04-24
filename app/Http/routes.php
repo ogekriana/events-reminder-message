@@ -22,6 +22,8 @@ Route::get('/hello', function () {
 //API Routing
 Route::group(['prefix' => 'v1/'], function(){
 	Route::resource('events', 'EventsController');
+	Route::resource('users', 'UserController');
+	Route::resource('events.reminders', 'EventReminderController');
 });
 
 Route::group(['middleware' => 'web'], function(){

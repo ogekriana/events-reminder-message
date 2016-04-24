@@ -13,4 +13,8 @@ class Event extends Model
     public function users(){
     	return $this->belongsTo('SimpleProject\User', 'user_id');
     }
+
+    public function eventReminders(){
+    	return $this->hasMany('SimpleProject\EventReminder', 'event_id');
+    }
 }

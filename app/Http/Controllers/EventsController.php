@@ -13,17 +13,17 @@ class EventsController extends Controller
 {
     public function index(){
     	$events = Event::all();
-    	return Response::json(['message' => $events], 200);
+    	return Response::json(['data' => $events], 200);
     }
 
     public function show($id){
-    	$event = Event::with(
-            array('users'=>function($query){
-                $query->select('id','name');
+    	/*$event = Event::with(
+            array('eventReminders'=>function($query){
+                $query->select('id','remind_date', 'message', 'remind_to');
                 //var_dump($query);die();
             })
-            )->find($id);
-		//$event = Event::with('users')->find($id);
+            )->find($id);*/
+		$event = Event::with('eventReminders')->find($id);
 
     	if(!$event){
     		return Response::json([
@@ -39,7 +39,7 @@ class EventsController extends Controller
     public function store(Request $request){
 
         $rules = array(
-            'user_id' => 'required',
+            'user_id' => 'required | exists:users,id',
             'date' => 'required | date_format:Y-m-d',
             'title' => 'required',
         );
