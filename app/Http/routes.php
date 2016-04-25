@@ -17,21 +17,27 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'web'], function(){
 	Route::auth();
-	Route::get('/home', 'HomeController@index');
+	Route::get('/dashboard', 'HomeController@index');
+
+	Route::get('/event/{event}/reminders', [
+		'as' => 'event.reminders.list',
+		'uses' => 'EventReminderController@index'
+	])->where('event', '[0-9]+');
 });
 
-//API Routing
+
 Route::group(['prefix' => 'v1/'], function(){
 	Route::resource('events', 'EventsController');	
+	Route::get('users/{user}/events', [
+		'as' => 'users.events.show',
+		'uses' => 'EventsController@findByUser'
+	])->where('users','[0-9]+');
 
-	Route::get('users', [
-		'as' => 'users.index',
-		'uses' => 'UserController@index'
-	]);
-	Route::get('users/{id}', [
-		'as' => 'users.show',
-		'uses' => 'UserController@show'
-	])->where('id', '[0-9]+');
+	Route::resource(
+    	'users',
+    	'UserController',
+    	['only' => ['index', 'show']]
+	);
 
 	Route::post('events/{event}/reminders', [
     	'as'   => 'events.reminders.store',

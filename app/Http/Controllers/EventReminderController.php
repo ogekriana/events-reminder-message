@@ -12,6 +12,10 @@ use Response;
 class EventReminderController extends Controller
 {
 
+    public function index(Request $request){
+        
+        return view('reminder')->with('event', $request->event);
+    }
     /**
      * Store a newly created resource in storage.
      *

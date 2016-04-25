@@ -30,15 +30,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('events')->find($id);
-        if(!$user){
-            return Response::json([
-                'error' => [
-                    'message' => 'User doesn\'t exist'
-                ]
-            ],404);
-        }
-        return Response::json([ 'data' => $user],200);
+        $currentUser = \Auth::user();
+        if($currentUser){
+            //var_dump($currentUser->id);die;
+            $user = User::with('events')->find($currentUser->id);
+            if(!$user){
+                return Response::json([
+                    'error' => [
+                        'message' => 'User doesn\'t exist'
+                    ]
+                ],404);
+            }
+            return Response::json([ 'data' => $user],200);
+        }        
     }
 
 }

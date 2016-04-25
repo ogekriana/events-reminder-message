@@ -36,6 +36,11 @@ class EventsController extends Controller
     	return Response::json(['data' => $event], 200);
     }
 
+    public function findByUser(Request $request){
+        $events = Event::where('user_id', $request->user)->get();
+        return Response::json(['data' => $events], 200);
+    }
+
     public function store(Request $request){
 
         $rules = array(
