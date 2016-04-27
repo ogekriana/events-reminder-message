@@ -27,7 +27,7 @@
 
 
 </head>
-<body id="app-layout" ng-app="erm">
+<body id="app-layout" ng-app="ermApp">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -76,9 +76,13 @@
 
     @yield('content')
     <!-- JavaScripts -->
+    
+    {!! Html::script('js/angular.min.js') !!}    
+    {!! Html::script('js/angular-route.min.js') !!}
+    {!! Html::script('js/erm.site.js') !!}
+    {!! Html::script('js/erm.controller.js') !!}
+    {!! Html::script('js/erm.service.js') !!}
     {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    {!! Html::script('js/erm.site.js') !!}
 </body>
 </html>

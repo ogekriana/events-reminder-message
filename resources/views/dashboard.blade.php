@@ -2,27 +2,35 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2" ng-controller="eventCtrl">
+    <div class="row">        
+        <div class="col-md-8 col-md-offset-2" ng-controller="eventCtrl"> 
             <div ng-init="user_id={{Auth::user()->id }}"></div>
-            <div ng-repeat="(key, value) in events">
-            <div class="panel panel-default" ng-repeat="event in value">
-                <div class="panel-heading">
-                    <% event.title %>
-                    <span style="float:right">
-                        <a href="{{url('event/<% event.id %>/reminders')}}">Reminder</a>
-                    </span>
-                </div>
+            <div class="panel panel-default" ng-show="events.data.length == 0">
+                <div class="panel-heading">You haven't create any Event yet</div>
+                <div class="panel-body" style="text-align:center">
+                    <p>Click on button bellow to create a new event!</p>
+                    <a href="/event/create" type="button" class="btn btn-primary">CREATE NEW EVENT</a>
+                </div>                
+            </div>                                             
+            <div ng-show="events.data.length != 0" ng-repeat="(key, value) in events">
+                <a href="/event/create" type="button" class="btn btn-primary btn-block">CREATE NEW EVENT</a> 
+                <br>
+                <div class="panel panel-default" ng-repeat="event in value">
+                    <div class="panel-heading">
+                        <% event.title %>
+                        <span style="float:right">
+                            <a href="{{url('event/<% event.id %>/reminders')}}">Reminder</a>
+                        </span>
+                    </div>
 
-                <div class="panel-body">
-                    <p>Dvent date: <% event.date %></p>
-                    Description: 
-                    <p><% event.description %></p>                    
+                    <div class="panel-body">
+                        <p>Event date: <% event.date %></p>
+                        Description: 
+                        <p><% event.description %></p>                    
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection

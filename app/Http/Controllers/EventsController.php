@@ -11,6 +11,16 @@ use Response;
 
 class EventsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
     	$events = Event::all();
     	return Response::json(['data' => $events], 200);
@@ -42,13 +52,14 @@ class EventsController extends Controller
     }
 
     public function store(Request $request){
-
+        $attributes = $request->all();
+        $attributes['user_id'] = \Auth::user()->id;
         $rules = array(
             'user_id' => 'required | exists:users,id',
             'date' => 'required | date_format:Y-m-d',
             'title' => 'required',
         );
-        $validator = \Validator::make($request->all(), $rules);
+        $validator = \Validator::make($attributes, $rules);
         if ($validator->fails()) {
             return Response::json([
                 'error' =>[
@@ -56,7 +67,7 @@ class EventsController extends Controller
                 ]
             ],422);
         }else{
-            $event = Event::create($request->all());
+            $event = Event::create($attributes);
 
             return Response::json([
                     'message' => 'Event Created Succesfully',
