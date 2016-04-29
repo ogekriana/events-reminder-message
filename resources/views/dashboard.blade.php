@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container">
     <div class="row">        
@@ -12,21 +13,30 @@
                     <a href="/event/create" type="button" class="btn btn-primary">CREATE NEW EVENT</a>
                 </div>                
             </div>                                             
-            <div ng-show="events.data.length != 0" ng-repeat="(key, value) in events">
-                <a href="/event/create" type="button" class="btn btn-primary btn-block">CREATE NEW EVENT</a> 
+            <div ng-show="events.data.length != 0">
+                <a href="" ng-click="openModalCreate()" type="button" class="btn btn-primary btn-block">CREATE NEW EVENT</a> 
                 <br>
-                <div class="panel panel-default" ng-repeat="event in value">
+                <div class="panel panel-default" ng-repeat="event in events.data">
                     <div class="panel-heading">
                         <% event.title %>
                         <span style="float:right">
-                            <a href="{{url('event/<% event.id %>/reminders')}}">Reminder</a>
+                            <a ng-if="event.event_reminders.length == 0" href="">Set Reminder</a>
+                            <a ng-if="event.event_reminders.length > 0" href="{{url('event/<% event.id %>/reminders')}}">Show Reminder</a>
                         </span>
-                    </div>
-
+                    </div>                    
                     <div class="panel-body">
                         <p>Event date: <% event.date %></p>
                         Description: 
                         <p><% event.description %></p>                    
+                    </div>           
+                    @include('modals.update_event_modal')         
+                    @include('modals.create_event_modal')
+                    <div class="panel-footer">
+                        <div style="text-align:right">
+                            <a href="" ng-click="openModalUpdate(event.id)">Update</a>
+                             | 
+                            <a href="" ng-click="deleteEvent(event.id)">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>

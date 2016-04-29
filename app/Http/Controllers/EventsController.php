@@ -8,6 +8,7 @@ use SimpleProject\Http\Requests;
 use SimpleProject\Event;
 use SimpleProject\User;
 use Response;
+use DB;
 
 class EventsController extends Controller
 {
@@ -18,22 +19,29 @@ class EventsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+       $this->middleware('auth');
     }
     
-    public function index(){
-    	$events = Event::all();
+    public function index(Request $request){    
+        $limit = $request->input('limit',10);
+    	$events = Event::orderBy('date','asc')
+            ->paginate($limit);
     	return Response::json(['data' => $events], 200);
     }
 
-    public function show($id){
+    public function show(Request $request, $id){
+        if(isset($request->with) && ($request->with == 'eventReminders')){
+            $event = Event::with($request->with)
+                ->findOrFail($id);
+        }else{
+            $event = Event::findOrFail($id);
+        }
     	/*$event = Event::with(
             array('eventReminders'=>function($query){
                 $query->select('id','remind_date', 'message', 'remind_to');
                 //var_dump($query);die();
             })
-            )->find($id);*/
-		$event = Event::with('eventReminders')->find($id);
+            )->find($id);*/		
 
     	if(!$event){
     		return Response::json([
@@ -47,8 +55,17 @@ class EventsController extends Controller
     }
 
     public function findByUser(Request $request){
-        $events = Event::where('user_id', $request->user)->get();
-        return Response::json(['data' => $events], 200);
+        /*$events = Event::leftjoin('event_reminders', 'event_reminders.event_id', '=', 'events.id')
+            ->where('events.user_id', $request->user)
+            ->groupBy('events.id')
+            ->orderBy('events.updated_at', 'desc')
+            ->get(['events.*', DB::raw('count(event_reminders.id) as reminders')]);*/
+
+        $events = Event::with('eventReminders')
+            ->where('events.user_id', $request->user)
+            ->orderBy('events.updated_at', 'desc')
+            ->paginate(10);
+        return Response::json($events, 200);
     }
 
     public function store(Request $request){
@@ -108,6 +125,6 @@ class EventsController extends Controller
     public function destroy($id)
     {
         Event::destroy($id);
-        return Response::make(['message' => 'Event Deleted Succesfully'], 410);
+        return Response::json(['message' => 'Event Deleted Succesfully']);
     }
 }

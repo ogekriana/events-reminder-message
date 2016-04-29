@@ -25,6 +25,6 @@ class User extends Authenticatable
     ];
 
     public function events(){
-        return $this->hasMany('SimpleProject\Event', 'user_id');
+        return $this->hasMany('SimpleProject\Event', 'user_id')->orderBy('updated_at', 'desc');
     }
 }

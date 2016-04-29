@@ -10,19 +10,27 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
     <!-- Styles -->
     {!! Html::style('css/app.css') !!}
+    {!! Html::style('css/ngDatepicker.css') !!}
 
-        
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
     <style>
         body {
             font-family: 'Lato';
+            padding:20px;
         }
 
         .fa-btn {
             margin-right: 6px;
         }
+        .modal {
+        display: block;
+        }
+
     </style>
 
 
@@ -75,14 +83,19 @@
     </nav>
 
     @yield('content')
-    <!-- JavaScripts -->
-    
-    {!! Html::script('js/angular.min.js') !!}    
+    <!-- JavaScripts -->        
+    {!! Html::script('js/angular.min.js') !!}        
     {!! Html::script('js/angular-route.min.js') !!}
     {!! Html::script('js/erm.site.js') !!}
     {!! Html::script('js/erm.controller.js') !!}
     {!! Html::script('js/erm.service.js') !!}
     {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::script('js/ngDatepicker.min.js') !!}
+    {!! Html::script('js/moment.min.js') !!}
+    {!! Html::script('js/ui-bootstrap-tpls.js') !!}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"/>
+
 </body>
 </html>

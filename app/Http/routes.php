@@ -23,10 +23,6 @@ Route::group(['middleware' => 'web'], function(){
 		'as' => 'event.reminders.list',
 		'uses' => 'EventReminderController@index'
 	])->where('event', '[0-9]+');
-
-	Route::get('/event/create', function () {
-    	return view('create_event');
-	});
 });
 
 

@@ -17,11 +17,13 @@ elixir(function(mix) {
   var angularPath = 'resources/assets/vendor/angular';
   var angularRoutePath = 'resources/assets/vendor/angular-route';
   var jqueryUiPath = 'resources/assets/vendor/jquery-ui';
+  var angularUiPath = 'node_modules/angular-ui-bootstrap/dist';
   mix.sass('app.scss')
       .copy(jqueryPath + '/dist/jquery.min.js', 'public/js')
       .copy(bpath + '/fonts', 'public/fonts')
       .copy(bpath + '/javascripts/bootstrap.min.js', 'public/js')
       .copy(angularPath + '/angular.min.js', 'public/js')
       .copy(angularRoutePath + '/angular-route.min.js', 'public/js')
+      .copy(angularUiPath + '/ui-bootstrap.js', 'public/js')
       .copy(jqueryUiPath + '/jquery-ui.min.js', 'public/js');
 });
