@@ -39,6 +39,7 @@ Route::group(['prefix' => 'v1/'], function(){
     	['only' => ['index', 'show']]
 	);
 
+	Route::get('reminders/{reminder}', 'EventReminderController@show');
 	Route::post('events/{event}/reminders', [
     	'as'   => 'events.reminders.store',
 	    'uses' => 'EventReminderController@store'

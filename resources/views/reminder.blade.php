@@ -19,13 +19,18 @@
                         On: <% reminder.remind_date %>
                     </span>
                 </div>
-
                 <div class="panel-body">
                     <p><% reminder.message %></p>                                    
+                </div>
+                <div class="panel-footer" style="text-align:right">
+                    <a href="" ng-click="updateReminderModal(reminder.id)">Update</a>
+                     | 
+                     <a href="" ng-click="delReminder(reminder.id,value.id)">Delete</a>
                 </div>
             </div>
             </div>
             @include('modals.create_reminder_modal')
+            @include('modals.update_reminder_modal')
         </div>
     </div>
 </div>

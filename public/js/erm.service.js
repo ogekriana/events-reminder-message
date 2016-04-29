@@ -93,6 +93,26 @@ ermAppServices.service('eventService', ['$http', function($http){
 }]);
 
 ermAppServices.service('reminderService', ['$http', 'eventService', function($http, $eventService){
+
+	this.reminderId;
+	this.setReminderId = function(reminderId){
+		this.reminderId = reminderId;
+	};
+
+	this.getReminder = function(){
+		var endpoint = '/v1/reminders/'+this.reminderId;
+		return $http({
+			method: 'GET',
+			url: endpoint
+		})
+		.success(function(data) {
+				return data;
+			})
+			.error(function(data) {
+				return data;
+			});
+	};
+
 	this.createReminder = function(param){
 		//console.log($eventService.eventId);
 		var endpoint = '/v1/events/'+$eventService.eventId+'/reminders';
@@ -101,6 +121,39 @@ ermAppServices.service('reminderService', ['$http', 'eventService', function($ht
 			url: endpoint,
 			data: param,
 			header: {'Content-Type': 'application/json'}
+		})
+		.success(function(data){
+			return data;
+		})
+		.error(function(data){
+			return data;
+		});
+	};
+
+	this.deleteReminder = function(reminderId, eventId){
+		var endpoint = '/v1/events/'+eventId+'/reminders/'+reminderId+'';
+		return $http({
+			method: 'DELETE',
+			url: endpoint			
+		})
+		.success(function(data){
+			return data;
+		})
+		.error(function(data){
+			return data;
+		});
+	};
+
+	this.updateReminder = function(param){
+		var eventId = param.event_id;
+		var reminderId = param.id;
+		var endpoint = '/v1/events/'+eventId+'/reminders/'+reminderId;
+		//console.log(endpoint);
+		return $http({
+			method: 'PUT',
+			url: endpoint,
+			data: param,
+			headers: {'Content-Type': 'application/json'}			
 		})
 		.success(function(data){
 			return data;

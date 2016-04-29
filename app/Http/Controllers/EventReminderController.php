@@ -16,6 +16,21 @@ class EventReminderController extends Controller
         
         return view('reminder')->with('event', $request->event);
     }
+
+    public function show(Request $request){
+        //var_dump($request->reminder);die;
+        $reminder = EventReminder::findOrFail($request->reminder);
+
+        if(!$reminder){
+            return Response::json([
+                'error' => [
+                    'message' => 'Event reminder doesn\'t exist!'
+                ]
+            ],422);
+        }
+        return Response::json(['data' => $reminder],200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -101,6 +116,6 @@ class EventReminderController extends Controller
     public function destroy(Request $request, $id)
     {
         EventReminder::destroy($request->reminder);
-        return Response::make(['message' => 'Event Reminder Deleted Succesfully'], 410);
+        return Response::json(['message' => 'Event Reminder Deleted Succesfully']);
     }
 }

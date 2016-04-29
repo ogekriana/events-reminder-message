@@ -110,7 +110,7 @@ ermAppController.controller('eventReminderCtrl', ['$http','$scope', 'reminderSer
 	}
 }]);
 
-ermAppController.controller('reminderCtrl', ['$scope', '$http', '$uibModal', 'eventService', function($scope, $http, $uibModal, $eventService){
+ermAppController.controller('reminderCtrl', ['$scope', '$http', '$uibModal', 'eventService', 'reminderService', '$window', function($scope, $http, $uibModal, $eventService, $reminderService, $window){
 
 	$scope.$watch('eventId', function () {
     	var endpoint = '/v1/events/'+$scope.eventId+'?with=eventReminders';
@@ -126,11 +126,61 @@ ermAppController.controller('reminderCtrl', ['$scope', '$http', '$uibModal', 'ev
  		var modalInstance = $uibModal.open({
  			animation: $scope.animationsEnabled,
  			templateUrl: 'CreateRemModal.html',
- 			controller: 'eventReminderCtrl'
+ 			controller: 'eventReminderCtrl',
+ 			resolve:{
+ 				reminder: function(){
+ 					return $scope.reminder;
+ 				}
+ 			}
  		});
  	};	
 
   	$scope.toggleAnimation = function () {
     	$scope.animationsEnabled = !$scope.animationsEnabled;
+  	};
+
+  	$scope.delReminder = function(reminderId, eventId){
+  		$reminderService.deleteReminder(reminderId, eventId)
+  			.success(function(data){
+  				alert(data.message);
+  				$window.location.reload();
+  			})
+  			.error(function(data){
+  				alert('Failed to delete reminder');
+  			});
+  	};
+
+  	$scope.updateReminderModal = function(eventId){
+
+  		$reminderService.setReminderId(eventId);
+  		var modalInstance = $uibModal.open({
+  			animation: $scope.animationsEnabled,
+  			templateUrl: 'UpdateRemModal.html',
+  			controller: 'UpdateReminderModal'
+  		});
+  	};
+}]);
+
+ermAppController.controller('UpdateReminderModal', ['$scope','reminderService','$uibModalInstance','$window', function($scope, $reminderService,$uibModalInstance, $window){
+
+	$reminderService.getReminder().then(function(response){
+  		$scope.reminder = response.data.data;
+  	});
+
+  	$scope.cancel = function(){
+  		$uibModalInstance.dismiss('cancel');
+  	};
+
+  	$scope.editReminder = function(reminder){
+  		console.log(reminder);
+  		$reminderService.updateReminder(reminder)
+  			.success(function(data){
+  				//return data;
+  				$uibModalInstance.close();
+  				$window.location.reload();
+  			})
+  			.error(function(data){
+  				return data;
+  			});
   	};
 }]);
