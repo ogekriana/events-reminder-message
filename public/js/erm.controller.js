@@ -40,6 +40,16 @@ ermAppController.controller('eventCtrl', ['$scope','$window','eventService', '$u
  			templateUrl: 'CreateEvModal.html',
  			controller: 'createEventCtrl' 			
  		});
+ 	};
+
+ 	$scope.openCreateReminder =function(param){
+ 		$eventService.setEventId(param);
+
+ 		var modalInstance = $uibModal.open({
+ 			animation: $scope.animationsEnabled,
+ 			templateUrl: 'CreateRemModal.html',
+ 			controller: 'eventReminderCtrl'
+ 		});
  	};	
 
   	$scope.toggleAnimation = function () {
@@ -50,8 +60,7 @@ ermAppController.controller('eventCtrl', ['$scope','$window','eventService', '$u
 
 ermAppController.controller('createEventCtrl', ['$scope','$window','eventService','$uibModalInstance', function($scope,$window, $eventService, $uibModalInstance){
 	$scope.createEvent = function(ev){	
-		$scope.master = angular.copy(ev);
-		$eventService.createEvent($scope.master)
+		$eventService.createEvent(ev)
 			.success(function(data) {
 				$scope.message = data.message;	
 				$uibModalInstance.close();
@@ -85,11 +94,43 @@ ermAppController.controller('UpdateEventModal', ['$scope','eventService','$uibMo
 
 }]);
 
-ermAppController.controller('eventReminderCtrl', function($scope, $http){
+ermAppController.controller('eventReminderCtrl', ['$http','$scope', 'reminderService', '$window', function($http, $scope, $reminderService, $window){	
+	
+	$scope.createReminder = function(data){
+		$reminderService.createReminder(data)
+			.success(function(data){
+				$window.location.href = '/event/'+data.data.id+'/reminders';	
+				console.log(data);
+				console.log(data.data.id);
+		});
+	}
+
+	$scope.cancel = function(){
+		$uibModalInstance.dismiss('cancel');
+	}
+}]);
+
+ermAppController.controller('reminderCtrl', ['$scope', '$http', '$uibModal', 'eventService', function($scope, $http, $uibModal, $eventService){
+
 	$scope.$watch('eventId', function () {
-    	var endpoint = '/v1/events/'+$scope.eventId+'';
+    	var endpoint = '/v1/events/'+$scope.eventId+'?with=eventReminders';
 		$http.get(endpoint).success(function ($reminders) {
 	        $scope.reminders = $reminders;        
-	    }); 
+	    });		
 	});
-});
+
+	$scope.animationsEnabled = true;
+	$scope.openCreateReminder =function(param){
+ 		$eventService.setEventId(param);
+
+ 		var modalInstance = $uibModal.open({
+ 			animation: $scope.animationsEnabled,
+ 			templateUrl: 'CreateRemModal.html',
+ 			controller: 'eventReminderCtrl'
+ 		});
+ 	};	
+
+  	$scope.toggleAnimation = function () {
+    	$scope.animationsEnabled = !$scope.animationsEnabled;
+  	};
+}]);

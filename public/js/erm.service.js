@@ -92,4 +92,23 @@ ermAppServices.service('eventService', ['$http', function($http){
 
 }]);
 
+ermAppServices.service('reminderService', ['$http', 'eventService', function($http, $eventService){
+	this.createReminder = function(param){
+		//console.log($eventService.eventId);
+		var endpoint = '/v1/events/'+$eventService.eventId+'/reminders';
+		return $http({
+			method: 'POST',
+			url: endpoint,
+			data: param,
+			header: {'Content-Type': 'application/json'}
+		})
+		.success(function(data){
+			return data;
+		})
+		.error(function(data){
+			return data;
+		});
+	};
+}]);
+
 

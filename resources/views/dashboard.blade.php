@@ -20,7 +20,7 @@
                     <div class="panel-heading">
                         <% event.title %>
                         <span style="float:right">
-                            <a ng-if="event.event_reminders.length == 0" href="">Set Reminder</a>
+                            <a ng-if="event.event_reminders.length == 0" ng-click="openCreateReminder(event.id)" href="">Set Reminder</a>
                             <a ng-if="event.event_reminders.length > 0" href="{{url('event/<% event.id %>/reminders')}}">Show Reminder</a>
                         </span>
                     </div>                    
@@ -31,6 +31,7 @@
                     </div>           
                     @include('modals.update_event_modal')         
                     @include('modals.create_event_modal')
+                    @include('modals.create_reminder_modal')
                     <div class="panel-footer">
                         <div style="text-align:right">
                             <a href="" ng-click="openModalUpdate(event.id)">Update</a>
