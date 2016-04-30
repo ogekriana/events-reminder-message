@@ -1,4 +1,4 @@
-<h1>Hi, {{ $remind_to }}</h1>
+<h3>Hi, {{ $remind_to }}</h3>
  
 <p>Event Title: {{ $event['title'] }}</p>
 <p>Event Date:  {{ $event['date'] }}</p>

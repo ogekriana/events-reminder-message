@@ -40,6 +40,8 @@ Route::group(['prefix' => 'v1/'], function(){
 	);
 
 	Route::get('reminders/{reminder}', 'EventReminderController@show');
+	Route::get('reminder/today', 'EventReminderController@getTodayReminders');
+
 	Route::post('events/{event}/reminders', [
     	'as'   => 'events.reminders.store',
 	    'uses' => 'EventReminderController@store'

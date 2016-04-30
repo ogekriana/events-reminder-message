@@ -30,6 +30,13 @@ class EventReminderController extends Controller
         return Response::json(['data' => $reminder],200);
     }
 
+    public function getTodayReminders(){
+        $reminderlist = EventReminder::with('event')
+            ->where('remind_date',date("Y-m-d"))
+            ->get();
+        return $reminderlist;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

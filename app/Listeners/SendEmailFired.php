@@ -31,9 +31,9 @@ class SendEmailFired
         $reminder = EventReminder::with('event')->findOrFail($event->reminderId)->toArray(); 
         $reminder['content'] = $reminder['message'];
         //var_dump($reminder);die;
-        Mail::send('emails.reminder_message', $reminder, function($message) use ($reminder) {
+        Mail::queue('emails.reminder_message', $reminder, function($message) use ($reminder) {
             $message->to($reminder['remind_to']);
-            $message->subject('Event Reminder Testing');
+            $message->subject('Event Reminder');
         });
     }
 }
