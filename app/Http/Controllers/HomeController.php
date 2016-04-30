@@ -4,6 +4,8 @@ namespace SimpleProject\Http\Controllers;
 
 use SimpleProject\Http\Requests;
 use Illuminate\Http\Request;
+use Event;
+use SimpleProject\Events\SendEmail;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        Event::fire(new SendEmail(26));
         return view('dashboard');
     }
 }

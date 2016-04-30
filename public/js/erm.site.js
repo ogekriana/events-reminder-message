@@ -2,5 +2,3 @@ var ermApp = angular.module('ermApp', ['ngRoute', 'ermAppController', 'jkuri.dat
 	$interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');	
 });
-
-

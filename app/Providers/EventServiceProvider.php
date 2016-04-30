@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'SimpleProject\Events\SomeEvent' => [
             'SimpleProject\Listeners\EventListener',
         ],
+        'SimpleProject\Events\SendEmail' => [
+            'SimpleProject\Listeners\SendEmailFired',
+        ],
     ];
 
     /**

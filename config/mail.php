@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'kegoerm.dev@gmail.com', 'name' => 'ERM | Event Reminder'],
 
     /*
     |--------------------------------------------------------------------------

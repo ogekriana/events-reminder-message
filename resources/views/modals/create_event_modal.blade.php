@@ -14,7 +14,7 @@
 	        </div>
 	        <div class="form-group">
 	        	<label for="event-description">Event description</label>
-	        	<input id="event-description" placeholder="Event Description" class="form-control" type="text" ng-model="ev.description">				        	
+	        	<textarea id="event-description" placeholder="Event Description" class="form-control" type="text" ng-model="ev.description"></textarea>				        	
 	        </div>	        
 		</form>
 	</div>

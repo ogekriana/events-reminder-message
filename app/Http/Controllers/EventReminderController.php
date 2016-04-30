@@ -18,7 +18,6 @@ class EventReminderController extends Controller
     }
 
     public function show(Request $request){
-        //var_dump($request->reminder);die;
         $reminder = EventReminder::findOrFail($request->reminder);
 
         if(!$reminder){
