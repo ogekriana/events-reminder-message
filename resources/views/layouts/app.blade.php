@@ -94,7 +94,7 @@
     {!! Html::script('js/ngDatepicker.min.js') !!}
     {!! Html::script('js/moment.min.js') !!}
     {!! Html::script('js/ui-bootstrap-tpls.js') !!}
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"/>
 
 </body>

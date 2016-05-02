@@ -23,9 +23,8 @@ ermAppServices.service('eventService', ['$http', function($http){
 		});
 	}
 
-	this.getEventByUser = function(userId){
-		console.log("service get event 888");
-		var endpoint = '/v1/users/'+userId+'/events';
+	this.getEventByUser = function(userId, page){
+		var endpoint = '/v1/users/'+userId+'/events?page='+page;
 	    return $http({
 				method: 'GET',
 				url: endpoint

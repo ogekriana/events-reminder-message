@@ -1,11 +1,27 @@
 var ermAppController = angular.module('ermAppController', ['ermAppServices']);
-ermAppController.controller('eventCtrl', ['$scope','$window','eventService', '$uibModal', '$log', function($scope, $window, $eventService, $uibModal, $log){
+ermAppController.controller('eventCtrl', ['$scope','$window','eventService', '$uibModal', '$log', '$http', function($scope, $window, $eventService, $uibModal, $log, $http){
 
-	$scope.$watch('user_id', function () {
-		$eventService.getEventByUser($scope.user_id).then(function(response){
-			$scope.events = response.data;
-		});
-	}); 
+  $scope.init = function(user_id, page){
+    
+    if(undefined != page){
+      $scope.currentPage = page;
+    }else{
+      $scope.currentPage = 1;
+    }
+    $eventService.getEventByUser($scope.user_id, $scope.currentPage).then(function(response){
+      $scope.totalPages = response.data.last_page;      
+      $scope.pages = []; 
+
+      for (var i = 1; i <= $scope.totalPages; i++) { 
+        $scope.pages.push(i) 
+      } 
+      $scope.events = response.data;
+    });
+  }
+
+  $scope.$watch('user_id', function () {
+    $scope.init($scope.user_id, $scope.currentPage);
+  });  	
 
 	$scope.deleteEvent = function(eventId){
 		$eventService.eventDelete(eventId)

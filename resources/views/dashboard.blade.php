@@ -40,6 +40,10 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <posts-pagination></posts-pagination>
+                </div>
+                
             </div>
         </div>
     </div>
