@@ -10,14 +10,14 @@
             @include('modals.create_reminder_modal')
             <div ng-init="user_id={{Auth::user()->id }}"></div>
             <div class="panel panel-default" ng-show="events.data.length == 0">
-                <div class="panel-heading">You haven't create any Event yet</div>
+                <div class="panel-heading">{{ trans('website.dashboard.no_event') }}</div>
                 <div class="panel-body" style="text-align:center">
-                    <p>Click on button bellow to create a new event!</p>
-                    <a href="" ng-click="openModalCreate()" type="button" class="btn btn-primary">CREATE NEW EVENT</a>
+                    <p>{{ trans('website.dashboard.add_event') }}</p>
+                    <a href="" ng-click="openModalCreate()" type="button" class="btn btn-primary">{{ trans('website.dashboard.add_event_btn') }}</a>
                 </div>                
             </div>                                             
             <div ng-show="events.data.length != 0" ng-cloak>
-                <a href="" ng-click="openModalCreate()" type="button" class="btn btn-primary btn-block">CREATE NEW EVENT</a> 
+                <a href="" ng-click="openModalCreate()" type="button" class="btn btn-primary btn-block">{{ trans('website.dashboard.add_event_btn') }}</a> 
                 <br>
                 <div class="panel panel-default" ng-repeat="event in events.data">
                     <div class="panel-heading">

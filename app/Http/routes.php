@@ -10,13 +10,19 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::auth();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group(
+[
+	'prefix' => LaravelLocalization::setLocale(),
+	'middleware' => [ 'localeSessionRedirect', 'localizationRedirect' ]
+],
+function()
+{
+	Route::get('/', function () {
+	    return view('welcome');
+	});
 
-Route::group(['middleware' => 'web'], function(){
-	Route::auth();
 	Route::get('/dashboard', 'HomeController@index');
 
 	Route::get('/event/{event}/reminders', [
@@ -24,6 +30,7 @@ Route::group(['middleware' => 'web'], function(){
 		'uses' => 'EventReminderController@index'
 	])->where('event', '[0-9]+');
 });
+
 
 
 Route::group(['prefix' => 'v1/'], function(){
